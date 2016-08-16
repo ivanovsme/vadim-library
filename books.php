@@ -6,14 +6,16 @@
 	if (!$connect) {
 	    die("Connection failed: " . mysqli_connect_error());
 	}
-		$sql = "SELECT author_id,author_name FROM author";
+		$author = $_GET['author'];
+		$sql = "SELECT `book` FROM `books` WHERE `author_id` = $author";
 		$result = mysqli_query($connect,$sql);
 
-		$authors = array();
+		$books = array();
 		while($row = mysqli_fetch_array($result)) {
-			$authors[] = $row;
+			$books[] = $row;
 		}
-?>	
+?>
+
 <!DOCTYPE html>		
 <html lang="en">
   <head>
@@ -33,32 +35,11 @@
     </script>
   </head>
   <body>
- <!-- Add author form -->
-    	 <form action="test.php" method="POST">
-		  Add book author:<br>
-		  <input type="text" name="author">
-		  <br>
-		  <input type="submit" value="Add Author" class="btn btn-default">
-		</form><br>
-
-<!-- Add book form -->
-		<form action="test2.php" method="POST">
-			Select author and add book:<br>
-			<select name="author_id" onChange="">
-				<?php foreach ($authors as $row) { ?>
-					<option value="<?=$row["author_id"]?>"><?=$row["author_name"]?></option>
-				<?php } ?>
-			</select><br>			
-			<input type="text" name="book"><br>
-			<input type="submit" value="Add Book" class="btn btn-default">
-		</form>
-
-		<hr/>
-
-		<?php foreach ($authors as $row) { ?>
-			<a href="books.php?author=<?=$row["author_id"]?>"><?=$row["author_name"]?></a><br/>
-		<?php } ?>
-			
+  		<ol>
+			<?php foreach ($books as $row) { ?>
+				<li><?=$row["book"]?></li>
+			<?php } ?>
+		</ol>
 	</body>
 <!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
