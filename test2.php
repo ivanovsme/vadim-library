@@ -9,7 +9,7 @@ if (!$conn) {
 //Record to DB
 $book = $_POST['book'];
 $author_id = $_POST['author_id'];
-$sql = "INSERT INTO books (author_name, book)
+$sql = "INSERT INTO books (author_id, book)
 VALUES ('$author_id', '$book')";
 
 if (mysqli_query($conn, $sql)) {

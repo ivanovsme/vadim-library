@@ -1,15 +1,17 @@
 <?php
+
 	// Create connection
 	$connect = mysqli_connect("localhost", "root", "", "lib");
 	// Check connection
 	if (!$connect) {
 	    die("Connection failed: " . mysqli_connect_error());
 	}
-		$sql = "SELECT author_name FROM author";
+		$sql = "SELECT author_id,author_name FROM author";
 		$result = mysqli_query($connect,$sql);
-		$options = "";
+
+		$authors = array();
 		while($row = mysqli_fetch_array($result)) {
-			$options = $options."<option>$row[0]</option>";
+			$authors[] = $row;
 		}
 ?>	
 <!DOCTYPE html>		
@@ -38,11 +40,14 @@
 		  <br>
 		  <input type="submit" value="Add Author" class="btn btn-default">
 		</form><br>
+
 <!-- Add book form -->
 		<form action="test2.php" method="POST">
 			Select author and add book:<br>
 			<select name="author_id" onChange="">
-			<?php echo $options; ?>
+				<?php foreach ($authors as $row) { ?>
+					<option value="<?=$row["author_id"]?>"><?=$row["author_name"]?></option>
+				<?php } ?>
 			</select><br>			
 			<input type="text" name="book"><br>
 			<input type="submit" value="Add Book" class="btn btn-default">
