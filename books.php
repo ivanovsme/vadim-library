@@ -9,10 +9,17 @@
 		$author = $_GET['author'];
 		$sql = "SELECT `book` FROM `books` WHERE `author_id` = $author";
 		$result = mysqli_query($connect,$sql);
-
+		
 		$books = array();
 		while($row = mysqli_fetch_array($result)) {
 			$books[] = $row;
+		}
+
+		$sql = "SELECT `author_name` FROM `author` WHERE `author_id` = $author";
+		$result = mysqli_query($connect,$sql);
+		$author_name = "";
+		while($row = mysqli_fetch_array($result)) {
+			$author_name = $row["author_name"];
 		}
 ?>
 
@@ -35,6 +42,9 @@
     </script>
   </head>
   <body>
+  		<h1>
+  			<?=$author_name?>
+  		</h1>
   		<ol>
 			<?php foreach ($books as $row) { ?>
 				<li><?=$row["book"]?></li>
